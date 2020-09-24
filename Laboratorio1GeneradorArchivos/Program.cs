@@ -1,15 +1,26 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-
+using Laboratorio1GeneradorArchivos.Clases;
 namespace Laboratorio1GeneradorArchivos
 {
     class MainClass
     {
         public static void Main(string[] args)
         {
-
-            int ex=1;
+            //Metodo largo Absolutamente toda la logica esta un un solo archivo
+            //Codigo duplicado Algunas partes como la edicion del texto (esto esta implementado de manera implicita) se repiten tambien 
+            //como algunas funciones para limpiar la pantalla o la funcion de ver archivos 
+            //Excesivo uso de literales El path para ver los archivos esta hardcodeado
+            //Shotgun operation: El path de los archivos esta hardcodeado y si lo cambias tendrias que cambiar de TODOS las funciones que 
+            //hacen uso de esto
+            //Identificadores cortos: Algunos identificadores como ex op y mas son muy ambiguos
+            //Envidia de caracteristicas: Crear, Ver archivos utilizan el metodo editar
+            //demasiados ifs: Existen muchos ifs anidados y esto se puede ver mas elegante con un switch
+            //Codigo muerto: Como el File.exists crea un archivo cuando no existe, asi que nunca llegara al else
+            //statement
+            int ex;
+            AdmArchivos Archivo = new AdmArchivos("../../archivos.txt");
             do
             {
                 Console.WriteLine("---------Generador de archivos txt---------");
@@ -19,123 +30,22 @@ namespace Laboratorio1GeneradorArchivos
                 Console.WriteLine("0. Salir");
                 Console.Write("Escoja una opcion:");
                 ex = Convert.ToInt16(Console.ReadLine());
-
+                Console.Clear();
                 try
                 {
                     if (ex == 1)
                     {
-                        Console.Clear();
-                        Console.Write("Escribir el nombre del txt:");
-                        string nombre = Console.ReadLine();
-                        StreamWriter sw = new StreamWriter($"../../{nombre}.txt");
-                        Console.Write("Cuantas lineas desea tener en la su archivo txt?:");
-                        int lineas = Convert.ToInt16(Console.ReadLine());
-                        Console.Clear();
-                        string[] escrito = new string[lineas];
-                        Console.WriteLine($"NOMBRE DEL ARCHIVO: {nombre}.txt");
-                        for (int i = 0; i < lineas; i++)
-                        { 
-                            Console.WriteLine($"NUMERO DE LINEAS RESTANTES: {(lineas - i)}  EN CASO QUE DESEE FINALIZAR ESCRIBA EXIT y PRESIONE ENTER");
-                            escrito[i] = Console.ReadLine();
-                            if (escrito[i] == "exit" || escrito[i] == "Exit" || escrito[i] == "EXTI")
-                                break;
-                            else
-                                sw.WriteLine($"{i+1}. {escrito[i]}");
-                            Console.Clear();
-                        }
-                        sw.Close();
-                        StreamWriter lista = File.Exists("../../archivos.txt") ? File.AppendText("../../archivos.txt") : new StreamWriter("../../archivos.txt");
-                        lista.WriteLine(nombre);
-                        lista.Close();
+                        Archivo.crearArchivo();
+
                     }
                     if (ex == 2)
                     {
-                        Console.Clear();
-                        if (File.Exists("../../archivos.txt"))
-                        {
-                            Console.WriteLine("Lista de Archivos");
-                            string[] lineas = File.ReadAllLines("../../archivos.txt");
-                            for (int i = 0; i < lineas.Length; i++)
-                            {
-                                Console.WriteLine(i + 1 + ". " + lineas[i]);
-                            }
-                            Console.Write("Seleccione una archivo:");
-                            int op = Convert.ToInt16(Console.ReadLine());
-                            if (op > lineas.Length || op < 1)
-                            {
-                                Console.WriteLine("Opcion invalida!");
-                            }
-                            else
-                            {
-                                StreamReader archivo = File.OpenText($"../../{lineas[op - 1]}.txt");
-                                string contenido = archivo.ReadToEnd();
-                                Console.WriteLine("\n" + contenido);
-                                archivo.Close();
-                                Console.WriteLine("Desea anadir lineas al archivo txt?  1:si  2:no");
-                                int op2 = Convert.ToInt16(Console.ReadLine());
-                                if(op2==1)
-                                {
-                                    StreamWriter aumentar = File.AppendText("../../"+lineas[op - 1]+".txt");
-                                    Console.Write("¿Cuantas lineas desea anadir al archivo?");
-                                    int n = Convert.ToInt16(Console.ReadLine());
-                                    string[] escribir = new string[n];
-                                    for (int i = 0; i < n; i++)
-                                    {
-                                        Console.WriteLine($"NUMERO DE LINEAS RESTANTES: {(n - i)}");
-                                        escribir[i] = Console.ReadLine();
-                                        aumentar.WriteLine($"{lineas.Length+i}. {escribir[i]}");
-                                        Console.Clear();
-                                    }
-                                    aumentar.Close();
-                                    Console.WriteLine("Lineas anadidas!!");
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Hasta pronto!!");
-                                    Console.ReadKey();
-                                    Console.Clear();
-                                }
-                            }
-                        }
-                        else
-                        {
-                            Console.Clear();
-                            Console.WriteLine("No existe ningun archivo txt generado");
-                            Console.ReadKey();
-                        }
+                        Archivo.verArchivos();
+
                     }
                     if(ex==3)
                     {
-                        Console.Clear();
-                        if (File.Exists("../../archivos.txt"))
-                        {
-                            Console.WriteLine("Lista de Archivos");
-                            string[] lineas = File.ReadAllLines("../../archivos.txt");
-                            for (int i = 0; i < lineas.Length; i++)
-                            {
-                                Console.WriteLine(i + 1 + ". " + lineas[i]);
-                            }
-                            Console.Write("Seleccione una archivo para borrar:");
-                            int op = Convert.ToInt16(Console.ReadLine());
-                            if (op > lineas.Length || op < 1)
-                            {
-                                Console.WriteLine("Opcion invalida!");
-                            }
-                            else
-                            {
-                                File.Delete(lineas[op - 1] + ".txt");
-                                File.WriteAllLines("../../archivos.txt", File.ReadLines("../../archivos.txt").Where(linea => linea != lineas[op - 1]).ToList());
-                                Console.WriteLine("Lista Eliminada");
-                                Console.ReadKey();
-                            }
-                        }
-                        else
-                        {
-                            Console.Clear();
-                            Console.WriteLine("No existe archivos txt aun");
-                            Console.ReadKey();
-                        }
-                        
+                        Archivo.eliminarArchivo();                        
                     }
                     if (ex < 0 || ex > 3)
                     {

@@ -1,6 +1,7 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Laboratorio1GeneradorArchivos", "Laboratorio1GeneradorArchivos\Laboratorio1GeneradorArchivos.csproj", "{E355DF94-4BE4-4575-B410-42B851D555FA}"
 EndProject
 Global
@@ -9,9 +10,15 @@ Global
 		Release|anycpu = Release|anycpu
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E355DF94-4BE4-4575-B410-42B851D555FA}.Debug|anycpu.ActiveCfg = Debug|anycpu
-		{E355DF94-4BE4-4575-B410-42B851D555FA}.Debug|anycpu.Build.0 = Debug|anycpu
-		{E355DF94-4BE4-4575-B410-42B851D555FA}.Release|anycpu.ActiveCfg = Release|anycpu
-		{E355DF94-4BE4-4575-B410-42B851D555FA}.Release|anycpu.Build.0 = Release|anycpu
+		{E355DF94-4BE4-4575-B410-42B851D555FA}.Debug|anycpu.ActiveCfg = Debug|Any CPU
+		{E355DF94-4BE4-4575-B410-42B851D555FA}.Debug|anycpu.Build.0 = Debug|Any CPU
+		{E355DF94-4BE4-4575-B410-42B851D555FA}.Release|anycpu.ActiveCfg = Release|Any CPU
+		{E355DF94-4BE4-4575-B410-42B851D555FA}.Release|anycpu.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {577D0671-4968-41F0-955C-0DC2E796FEDB}
 	EndGlobalSection
 EndGlobal
