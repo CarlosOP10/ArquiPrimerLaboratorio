@@ -8,51 +8,49 @@ namespace Laboratorio1GeneradorArchivos
     {
         public static void Main(string[] args)
         {
-            //Metodo largo Absolutamente toda la logica esta un un solo archivo
-            //Codigo duplicado Algunas partes como la edicion del texto (esto esta implementado de manera implicita) se repiten tambien 
-            //como algunas funciones para limpiar la pantalla o la funcion de ver archivos 
-            //Excesivo uso de literales El path para ver los archivos esta hardcodeado
-            //Shotgun operation: El path de los archivos esta hardcodeado y si lo cambias tendrias que cambiar de TODOS las funciones que 
-            //hacen uso de esto
-            //Identificadores cortos: Algunos identificadores como ex op y mas son muy ambiguos
-            //Envidia de caracteristicas: Crear, Ver archivos utilizan el metodo editar
-            //demasiados ifs: Existen muchos ifs anidados y esto se puede ver mas elegante con un switch
-            //Codigo muerto: Como el File.exists crea un archivo cuando no existe, asi que nunca llegara al else
-            //statement
-            int ex;
-            AdmArchivos Archivo = new AdmArchivos("../../archivos.txt");
+   
+            int opcion;
+            AdmArchivos Archivo = new AdmArchivos("../../Archivos txt");
             do
             {
                 Console.WriteLine("---------Generador de archivos txt---------");
                 Console.WriteLine("1. Crear txt");
                 Console.WriteLine("2. Ver txt");
-                Console.WriteLine("3. Eliminar txt");
+                Console.WriteLine("3. Editar txt");
+                Console.WriteLine("4. Eliminar txt");
                 Console.WriteLine("0. Salir");
                 Console.Write("Escoja una opcion:");
-                ex = Convert.ToInt16(Console.ReadLine());
+                opcion = Convert.ToInt32(Console.ReadLine());
                 Console.Clear();
                 try
                 {
-                    if (ex == 1)
+                    switch (opcion)
                     {
-                        Archivo.crearArchivo();
+                        case 1:
+                            Console.WriteLine("Ingrese el nombre del archivo");
+                            Archivo.crearArchivo(Console.ReadLine());
+                        break;
 
-                    }
-                    if (ex == 2)
-                    {
-                        Archivo.verArchivos();
+                        case 2:
+                            Archivo.verArchivos();
+                        break;
 
+                        case 3:
+                            Console.WriteLine("Ingrese el nombre del archivo para editar");
+                            Archivo.editarTexto(Console.ReadLine());
+                        break;
+
+                        case 4:
+                            Console.WriteLine("Ingrese el nombre del archivo para eliminar");
+                            Archivo.eliminarArchivo(Console.ReadLine());
+                        break;
+
+                        default:
+                            Console.WriteLine("OPCION INVALIDA");
+                        break;
                     }
-                    if(ex==3)
-                    {
-                        Archivo.eliminarArchivo();                        
-                    }
-                    if (ex < 0 || ex > 3)
-                    {
-                        Console.Clear();
-                        Console.WriteLine("OPCION INVALIDA");
-                        Console.ReadKey();
-                    }
+
+                
                 }
                 catch (Exception e)
                 {
@@ -60,9 +58,10 @@ namespace Laboratorio1GeneradorArchivos
                 }
                 finally
                 {
-                    Console.WriteLine("Se finalizo la ejecucion del programa.");
+                    Console.ReadKey();
+                    Console.Clear();
                 }
-            } while (ex != 0);
+            } while (opcion != 0);
         }
     }
 }
